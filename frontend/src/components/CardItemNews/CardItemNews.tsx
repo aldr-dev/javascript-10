@@ -20,8 +20,11 @@ const CardItemNews: React.FC<Props> = ({data}) => {
   const dispatch = useAppDispatch();
 
   const handleDeleteOneNews = async (newsId: string) => {
-    await dispatch(deleteOneNews(newsId));
-    dispatch(updateStateNews(parseInt(newsId)));
+    const confirmDelete = confirm('Вы действительно хотите удалить данный новостной пост?');
+    if (confirmDelete) {
+      await dispatch(deleteOneNews(newsId));
+      dispatch(updateStateNews(parseInt(newsId)));
+    }
   };
 
   return (

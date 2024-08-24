@@ -1,5 +1,5 @@
 import {Comments} from '../../types';
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {deleteOneComment, fetchCommentsData, postFormComments} from './commentsThunks';
 
 export interface CommentsState {
@@ -19,7 +19,11 @@ const initialState: CommentsState = {
 const commentsSlice = createSlice({
   name: 'comments',
   initialState,
-  reducers: {},
+  reducers: {
+    updateStateComment: (state, {payload: id}: PayloadAction<number>) => {
+      state.commentsData = state.commentsData.filter((item) => item.id !== id);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(postFormComments.pending, (state) => {
       state.postCommentsIsLoading = true;
@@ -36,7 +40,7 @@ const commentsSlice = createSlice({
     });
     builder.addCase(fetchCommentsData.fulfilled, (state, {payload: dataArray}) => {
       state.getCommentsIsLoading = false;
-      state.commentsData = dataArray;
+      state.commentsData = dataArray.reverse();
     });
     builder.addCase(fetchCommentsData.rejected, (state) => {
       state.getCommentsIsLoading = false;
@@ -67,3 +71,6 @@ export const {
   selectDeleteCommentsIsLoading,
   selectPostCommentsIsLoading,
 } = commentsSlice.selectors;
+export const {
+  updateStateComment,
+} = commentsSlice.actions;

@@ -21,6 +21,7 @@ const Home = () => {
         <Button to="/create-post" component={Link} variant="contained">Добавить новый пост</Button>
       </Box>
 
+      <Typography variant="h5">{newsData.length === 0 ? 'Список новостей пуст, добавьте публикацию!' : null}</Typography>
       {newsData.map((data) => (
         <CardItemNews key={data.id} data={data}/>
       ))}
