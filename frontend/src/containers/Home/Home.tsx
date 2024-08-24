@@ -1,12 +1,18 @@
-import NewsForm from '../../components/NewsForm/NewsForm';
-import CommentsForm from '../../components/CommentsForm/CommentsForm';
+import {Box, Button, Typography} from '@mui/material';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div>
-      <NewsForm/>
-      <CommentsForm />
-    </div>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      mb={2}>
+      <Typography variant="h4">Посты</Typography>
+      <Button to="/create-post" component={Link} variant="contained">
+        Добавить новый пост
+      </Button>
+    </Box>
   );
 };
 

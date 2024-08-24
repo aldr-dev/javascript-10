@@ -46,7 +46,7 @@ const CommentsForm = () => {
   return (
     <>
       <Box component="form" onSubmit={onSubmitForm}>
-        <Typography variant={'h3'} sx={{mb: 2}}>Оставить комментарий</Typography>
+        <Typography variant={'h4'} sx={{mb: 2}}>Оставить комментарий</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
