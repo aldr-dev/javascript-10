@@ -1,8 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
+import {newsReducer} from '../store/news/newsSlice';
+import {commentsReducer} from '../store/comments/commentsSlice';
 
 export const store = configureStore({
   reducer: {
-
+    news: newsReducer,
+    comments: commentsReducer,
   }
 });
 
