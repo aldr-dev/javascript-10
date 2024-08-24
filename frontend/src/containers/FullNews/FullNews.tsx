@@ -9,6 +9,7 @@ import {deleteOneComment, fetchCommentsData} from '../../store/comments/comments
 import {selectFullNewsData} from '../../store/news/newsSlice';
 import {selectCommentsData, updateStateComment} from '../../store/comments/commentsSlice';
 import OneComment from '../../components/OneComment/OneComment';
+import {API_URL} from '../../config';
 
 const FullNews = () => {
   const dispatch = useAppDispatch();
@@ -34,11 +35,11 @@ const FullNews = () => {
     'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
 
   if (fullNews?.image) {
-    defaultImage = 'http://localhost:8080' + '/' + fullNews.image;
+    defaultImage = API_URL + '/' + fullNews.image;
   }
 
   let commentsBox = (
-    <Typography variant="h3" sx={{textAlign: 'center'}}>
+    <Typography variant="h4" sx={{textAlign: 'center'}}>
       Список комментарием пуст, добавьте комментарий!
     </Typography>
   );
@@ -56,6 +57,7 @@ const FullNews = () => {
       <Box sx={{width: '50%', mx: 'auto'}}>
         {comments.map((comment) => (
           <OneComment
+            id={comment.id.toString()}
             key={comment.id}
             author={comment.author}
             content={comment.content}

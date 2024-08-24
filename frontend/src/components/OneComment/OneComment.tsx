@@ -1,20 +1,25 @@
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
   Typography,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
+import {LoadingButton} from '@mui/lab';
+import {useAppSelector} from '../../app/hooks';
+import {selectDeleteCommentsIsLoading} from '../../store/comments/commentsSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Props {
+  id: string;
   author: string;
   content: string;
   onDelete: () => void;
 }
 
-const OneComment: React.FC<Props> = ({author, content, onDelete}) => {
+const OneComment: React.FC<Props> = ({id,author, content, onDelete}) => {
+  const deleteCommentIsLoading = useAppSelector(selectDeleteCommentsIsLoading);
+
   return (
     <Card sx={{mb: '15px'}}>
       <CardContent>
@@ -26,11 +31,17 @@ const OneComment: React.FC<Props> = ({author, content, onDelete}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
+        <LoadingButton
           onClick={onDelete}
-          variant="outlined"
-          startIcon={<DeleteIcon/>}>Delete
-        </Button>
+          sx={{mt: 2}}
+          color="primary"
+          type="submit"
+          loading={deleteCommentIsLoading ? deleteCommentIsLoading === id.toString() : false}
+          loadingPosition="start"
+          startIcon={<DeleteIcon/>}
+          variant="contained">
+          <span>Удалить</span>
+        </LoadingButton>
       </CardActions>
     </Card>
   );
