@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
       <NavBar/>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{mb: 3}}>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/news/:id" element={<FullNews/>}/>

@@ -1,5 +1,5 @@
 import {FullNewsType, News} from '../../types';
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {deleteOneNews, fetchNewsData, fetchOneNewsData, postFormNews} from './newsThunks';
 
 export interface NewsState {
@@ -23,7 +23,11 @@ const initialState: NewsState = {
 const newsSlice = createSlice({
   name: 'news',
   initialState,
-  reducers: {},
+  reducers: {
+    updateStateNews: (state, {payload: id}: PayloadAction<number>) => {
+      state.newsData = state.newsData.filter((item) => item.id !== id);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(postFormNews.pending, (state) => {
       state.postIsLoading = true;
@@ -40,7 +44,7 @@ const newsSlice = createSlice({
     });
     builder.addCase(fetchNewsData.fulfilled, (state, {payload: newsArray}) => {
       state.getIsLoading = false;
-      state.newsData = newsArray;
+      state.newsData = newsArray.reverse();
     });
     builder.addCase(fetchNewsData.rejected, (state) => {
       state.getIsLoading = false;
@@ -86,3 +90,6 @@ export const {
   selectGetOneNewsIsLoading,
   selectFullNewsData,
 } = newsSlice.selectors;
+export const {
+  updateStateNews,
+} = newsSlice.actions;

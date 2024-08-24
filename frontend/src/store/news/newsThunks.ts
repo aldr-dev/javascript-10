@@ -31,7 +31,7 @@ export const fetchOneNewsData = createAsyncThunk<FullNewsType, string, { state: 
   }
 );
 
-export const deleteOneNews = createAsyncThunk<void, string, { state: RootState }>(
+export const deleteOneNews = createAsyncThunk<void, string , { state: RootState }>(
   'news/deleteOneNews', async (id) => {
     await axiosApi.delete<FullNewsType>(`/news/${id}`);
   }
