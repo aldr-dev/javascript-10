@@ -8,13 +8,13 @@ const commentsRouter = express.Router();
 commentsRouter.get('/', async (req, res, next) => {
   try {
     let sql = 'SELECT * FROM comments';
-    const {newsId} = req.query;
+    const {news_id} = req.query;
 
-    if (newsId) {
+    if (news_id) {
       sql = 'SELECT * FROM comments WHERE news_id = ?';
     }
 
-    const [comments] = await mysqlDb.getConnection().query(sql, [newsId]);
+    const [comments] = await mysqlDb.getConnection().query(sql, [news_id]);
 
     return res.send(comments);
   } catch (error) {
