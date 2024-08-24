@@ -18,7 +18,7 @@ const FileInput: React.FC<Props> = ({onChange, name, label, resetFileName, handl
       setFilename('');
       handleResetFileName(false);
     }
-  }, [resetFileName]);
+  }, [resetFileName, handleResetFileName]);
 
   const activateInput = () => {
     if (inputRef.current) {

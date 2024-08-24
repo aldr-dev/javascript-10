@@ -67,7 +67,7 @@ const NewsForm = () => {
   return (
     <>
       <Box component="form" onSubmit={onSubmitForm}>
-        <Typography variant={'h3'} sx={{mb: 2}}>Add new post</Typography>
+        <Typography variant={'h3'} sx={{mb: 2}}>Опубликовать новый пост</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField

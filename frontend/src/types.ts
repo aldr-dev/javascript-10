@@ -27,7 +27,7 @@ export interface Comments {
 }
 
 export interface CommentsMutation {
-  news_id: number;
+  newsId: string;
   author: string | null;
   content: string;
 }
