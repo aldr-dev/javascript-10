@@ -1,7 +1,9 @@
+import NewsForm from '../../components/NewsForm/NewsForm';
+
 const Home = () => {
   return (
     <div>
-      Home
+      <NewsForm/>
     </div>
   );
 };
