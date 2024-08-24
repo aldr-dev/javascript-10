@@ -22,7 +22,7 @@ const config = {
     host: 'localhost',
     user: 'root',
     password: '1qaz@WSX29',
-    database: '',
+    database: 'news_portal',
   }
 };
 
