@@ -2,12 +2,12 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import dayjs from 'dayjs';
-import {Box, Card, CardContent, CardMedia, Typography} from '@mui/material';
+import {Box, CardContent, CardMedia, CircularProgress, Typography} from '@mui/material';
 import CommentsForm from '../../components/CommentsForm/CommentsForm';
 import {fetchOneNewsData} from '../../store/news/newsThunks';
 import {deleteOneComment, fetchCommentsData} from '../../store/comments/commentsThunks';
 import {selectFullNewsData} from '../../store/news/newsSlice';
-import {selectCommentsData, updateStateComment} from '../../store/comments/commentsSlice';
+import {selectCommentsData, selectGetCommentsIsLoading, updateStateComment} from '../../store/comments/commentsSlice';
 import OneComment from '../../components/OneComment/OneComment';
 import {API_URL} from '../../config';
 
@@ -16,6 +16,7 @@ const FullNews = () => {
   const { id } = useParams<{ id: string }>();
   const fullNews = useAppSelector(selectFullNewsData);
   const comments = useAppSelector(selectCommentsData);
+  const commentsIsLoading = useAppSelector(selectGetCommentsIsLoading);
 
   useEffect(() => {
     if (id) {
@@ -38,23 +39,17 @@ const FullNews = () => {
     defaultImage = API_URL + '/' + fullNews.image;
   }
 
-  let commentsBox = (
-    <Typography variant="h4" sx={{textAlign: 'center'}}>
-      Список комментарием пуст, добавьте комментарий!
-    </Typography>
-  );
+  let commentsBox;
 
-  const handleCommentDelete = async (id: string) => {
-    const confirmDelete = confirm('Вы действительно хотите удалить данный комментарий?');
-    if  (confirmDelete) {
-      await dispatch(deleteOneComment(id));
-      dispatch(updateStateComment(parseInt(id)));
-    }
-  };
-
-  if (comments.length > 0) {
+  if (commentsIsLoading) {
     commentsBox = (
-      <Box sx={{width: '50%', mx: 'auto'}}>
+      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+        <CircularProgress />
+      </Box>
+    );
+  } else if (comments.length > 0) {
+    commentsBox = (
+      <Box>
         {comments.map((comment) => (
           <OneComment
             id={comment.id.toString()}
@@ -66,12 +61,26 @@ const FullNews = () => {
         ))}
       </Box>
     );
+  } else {
+    commentsBox = (
+      <Typography variant="h5" sx={{textAlign: 'center', mt: 2, mb: 2}}>
+        Список комментариев пуст, добавьте комментарий!
+      </Typography>
+    );
   }
+
+  const handleCommentDelete = async (id: string) => {
+    const confirmDelete = confirm('Вы действительно хотите удалить данный комментарий?');
+    if  (confirmDelete) {
+      await dispatch(deleteOneComment(id));
+      dispatch(updateStateComment(parseInt(id)));
+    }
+  };
 
   const idNews = id || '';
   return (
     <>
-      <Card sx={{mb: '15px', width: '50%', mx: 'auto', mt: '20px'}}>
+      <Box sx={{mb: '15px', width: '50%', mt: '20px'}}>
         <CardMedia
           component="img"
           sx={{
@@ -83,7 +92,7 @@ const FullNews = () => {
           }}
           image={defaultImage}
         />
-        <CardContent>
+        <CardContent sx={{paddingLeft: 0}}>
           <Typography gutterBottom variant="h4" component="div">
             {fullNews?.title}
           </Typography>
@@ -94,9 +103,11 @@ const FullNews = () => {
             {fullNews?.content}
           </Typography>
         </CardContent>
-      </Card>
-      <CommentsForm idNews={idNews} id={id}/>
+      </Box>
+      <hr/>
+      <Typography variant="h4">Коментарии:</Typography>
       {commentsBox}
+      <CommentsForm idNews={idNews} id={id}/>
     </>
   );
 };

@@ -76,7 +76,6 @@ const newsSlice = createSlice({
     selectGetIsLoading: (state) => state.getIsLoading,
     selectPostIsLoading: (state) => state.postIsLoading,
     selectDeleteIsLoading: (state) => state.deleteIsLoading,
-    selectGetOneNewsIsLoading: (state) => state.getOneNewsIsLoading,
     selectFullNewsData: (state) => state.fullNewsData,
   }
 });
@@ -87,7 +86,6 @@ export const {
   selectGetIsLoading,
   selectPostIsLoading,
   selectDeleteIsLoading,
-  selectGetOneNewsIsLoading,
   selectFullNewsData,
 } = newsSlice.selectors;
 export const {

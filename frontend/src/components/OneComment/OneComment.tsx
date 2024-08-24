@@ -21,10 +21,10 @@ const OneComment: React.FC<Props> = ({id,author, content, onDelete}) => {
   const deleteCommentIsLoading = useAppSelector(selectDeleteCommentsIsLoading);
 
   return (
-    <Card sx={{mb: '15px'}}>
+    <Card sx={{mb: 3, mt: 3}}>
       <CardContent>
-        <Typography gutterBottom variant="h4" component="div">
-          {author}
+        <Typography gutterBottom variant="h5" component="div">
+          <b>{author}</b> написал:
         </Typography>
         <Typography variant="h6" component="div">
           {content}
